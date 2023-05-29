@@ -1,0 +1,16 @@
+{
+  "name": "stockkeeper",
+  "version": "1.0.0",
+  "description": "Online Stock Managing website.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "nodemon app.js"
+  },
+  "author": "Sanidhya Sahu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pug": "^3.0.2"
+  }
+}

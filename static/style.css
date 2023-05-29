@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #E3FDFD;
+}
+
+.but {
+    background-color: #71C9CE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222831;
+    width: 80vw;
+    height: 10vh;
+    border-radius: 45px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    background: #E3FDFD;
+    box-shadow: -5px 5px 20px #9fb1b1,
+        5px -5px 20px #ffffff;
+}
+
+#admin {
+    position: relative;
+    top: -13vh;
+}
+
+#username {
+    position: relative;
+    top: -15vh;
+}
+
+.userloglabel,
+.passloglabel {
+    position: relative;
+    top: -11vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+.userloglabel {
+    top: -16vh;
+}
+
+.input {
+    background-color: #CBF1F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222831;
+    width: 75vw;
+    height: 10vh;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    top: -10vh;
+    border: none;
+    text-align: center;
+    background: #E3FDFD;
+    box-shadow: -5px 5px 20px #9fb1b1,
+        5px -5px 20px #ffffff;
+    font-size: 13px;
+}
+
+.input::placeholder {
+    text-align: center;
+    color: #22283179;
+    font-stretch: expanded;
+}
+
+nav {
+    width: 100vw;
+    height: 10vh;
+    background-color: #111418;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+}
+
+nav p {
+    color: #E3FDFD;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+
+
