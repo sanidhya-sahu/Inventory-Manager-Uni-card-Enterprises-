@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uni-Card|Stock</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <!-- <script src="../node_modules/html5-qrcode/html5-qrcode.min.js"></script> -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script defer src="../static/updatestock.js"></script>
+</head>
+
+<body>
+    <div id="reader"></div>
+    <div>
+        <p class="resultlabel note" id="resultlabel">Product name:</p>
+        <div id="result"></div>
+    </div>
+    <div>
+        <p class="notelabel note" id="notelabel">Enter details:</p>
+        <input type="text" name="note" id="note" class="note" placeholder="Details of stock updation">
+    </div>
+    <div>
+        <p class="notelabel note" id="quantitylabel">Quantity:</p>
+        <input type="number" name="quantity" id="quantity" class="note input" placeholder="Quantity of stock">
+    </div>
+    <form action="#" method="post">
+        <button id="update" class="but">Update Stock</button>
+    </form>
+    script.
+        // Check if the page is being refreshed
+        if (performance.navigation.type === 1) {
+        // Redirect to the desired page
+        window.location.href = '/redirect';
+        }
+</body>
+
+</html>
