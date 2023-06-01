@@ -16,7 +16,7 @@ function success(result) {
     document.getElementById('resultlabel').style.display = 'flex'
     document.getElementById('notelabel').style.display = 'flex'
     document.getElementById('quantitylabel').style.display = 'flex'
-    document.getElementById('quantity').style.display = 'flex'
+    document.getElementById('quantitycont').style.display = 'block'
     document.getElementById('update').style.display = 'flex'
     document.getElementById('resultlabel').style.position = 'relative'
     document.getElementById('notelabel').style.position = 'relative'

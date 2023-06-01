@@ -108,6 +108,10 @@ app.get('/updatestock', (req, res) => {
     res.render('updatestock')
     
 })
+app.post('/updatestock', (req, res) => {
+    // res.render('updates')
+    res.send('updated')
+})
 
 // Redirect route
 app.get('/redirect', (req, res) => {
