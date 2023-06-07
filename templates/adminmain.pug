@@ -14,9 +14,17 @@
     <form action="/viewstock" method="get" id="adminform">
         <button id="admin" class="but">View Stock</button>
     </form>
-    <form action="/updatestock" method="get">
+    <form action="/updatestock" method="get" style="position: relative; top: -10vh;">
         <button id="employee" class="but">Update Stock</button>
     </form>
-    
+    <form action="/registeremp" method="get">
+        <button id="employee" class="but">Register Employee</button>
+    </form>
+    script.
+        // Check if the page is being refreshed
+        if (performance.navigation.type === 1) {
+        // Redirect to the desired page
+        let text = "Reloading will lead to login again";
+        if (confirm(text) == true) {window.location.href = '/redirect';}}
 </body>
 </html>

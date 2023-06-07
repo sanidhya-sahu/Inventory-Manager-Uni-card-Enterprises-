@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uni-Card | Stock</title>
+    <title>Uni-Card | Update Stock</title>
     <link rel="stylesheet" href="../static/style.css">
     <!-- <script src="../node_modules/html5-qrcode/html5-qrcode.min.js"></script> -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script defer src="../static/updatestock.js"></script>
+    <script defer src="../static/updatestock.js" type="module"></script>
 </head>
 
 <body>
@@ -22,22 +22,23 @@
         <p class="resultlabel note" id="resultlabel">Product name:</p>
         <div id="result"></div>
 
-        <form action="#" method="post">
+        <form action="/updatestock" method="post" autocomplete="off" >
             <p class="notelabel note" id="notelabel">Enter details:</p>
-            <input type="text" name="note" id="note" class="note" placeholder="Details of stock updation" required />
+            <input type="text" name="note" id="note" class="note" placeholder="Details of stock updation (Bill no.)" required />
             <p class="notelabel note quantitylabel" id="quantitylabel">Quantity:</p>
             <!-- <input type="number" name="quantity" id="quantity" class="note input" placeholder="Quantity of stock" required /> -->
             <div class="quantity" id="quantitycont">
-                <input type="number" min="-1000" max="100000" step="1" value="0">
+                <input name="quantity" type="number" min="-1000" max="100000" step="1" value="0" required />
             </div>
             <button id="update" class="but">Update Stock</button>
         </form>
         script.
             // Check if the page is being refreshed
+            // Check if the page is being refreshed
             if (performance.navigation.type === 1) {
             // Redirect to the desired page
-            window.location.href = '/redirect';
-            }
+            let text = "Reloading will lead to login again";
+            if (confirm(text) == true) {window.location.href = '/redirect';}}
             jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up"><b>+</b></div><div class="quantity-button quantity-down"><b>-</b></div></div>').insertAfter('.quantity input');
             jQuery('.quantity').each(function() {
               var spinner = jQuery(this),
