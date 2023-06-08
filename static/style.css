@@ -96,7 +96,10 @@ nav p {
     font-family: 'Poppins', sans-serif;
     font-size: 20px;
 }
-
+p{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
 
 #reader {
     width: 600px;

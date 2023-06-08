@@ -64,6 +64,8 @@ app.get('/logina', (req, res) => {
     // console.log('admin login')
 })
 app.post('/logina', (req, res) => {
+    // console.log(req.body.username)
+    // console.log(req.body.password)
     data.find({
         user: req.body.username,
         pass: req.body.password,
@@ -246,7 +248,7 @@ app.post('/viewstock', (req, res) => {
         // res.render('updatestock')
     }
     else {
-        console.log(req.session.logsuccess)
+        // console.log(req.session.logsuccess)
         res.render('index')
     }
 });
@@ -277,6 +279,68 @@ app.post('/confirmredirecthome', (req, res) => {
 // Redirect route
 app.get('/redirect', (req, res) => {
     res.redirect('/');
+});
+app.get('/registeremp', (req, res) => {
+    res.render('registeremp');
+});
+app.post('/registeremp', (req, res) => {
+    data.find({ user: req.body.username })
+        .then(doc => {
+            if (Object.keys(doc).length === 0) {
+                const newuser = new data({
+                    user: String(req.body.username).toLowerCase(),
+                    pass: String(req.body.password).toLowerCase(),
+                    acctype: String(req.body.acctype).toLowerCase()
+                });
+                const regist = 'Registered ✅'
+                const user = String(req.body.username).toLowerCase()
+                const pass = String(req.body.password).toLowerCase()
+                const acctype = req.body.acctype
+                newuser.save()
+                    .then(saveduser => {
+                        res.render('usercreated.pug', { regist, user, pass, acctype })
+                    })
+                    .catch(error => {
+                        console.error('Error saving document:', error);
+                    });
+            }
+            else {
+                const regist = 'Not Registered ⚠️'
+                const user = 'User Already Exists'
+                const pass = 'User Already Exists'
+                const acctype = 'User Already Exists'
+                res.render('usercreated.pug', { regist, user, pass, acctype })
+            }
+        })
+});
+app.get('/removeemp', (req, res) => {
+    data.find({})
+        .then(dat => {
+            if (Object.keys(dat).length === 0) {
+                const found = "null"
+                res.render('removeemp', { found });
+            }
+            else {
+                var found = []
+                for (const obj of dat) {
+                    const user = obj['_doc'].user
+                    found.push(user)
+                }
+                // console.log(found)
+                res.render('removeemp', { found })
+            }
+        })
+});
+app.post('/deleteuser', (req, res) => {
+    const deleteduser=req.body.delete
+    data.deleteOne({user:deleteduser})
+        .then(done=>{
+            // console.log(done)
+            res.render('userdeleted',{deleteduser})
+        })
+        .catch(ercath=>{
+            console.error(ercath)
+        })
 });
 //server 
 app.listen(80, () => {
