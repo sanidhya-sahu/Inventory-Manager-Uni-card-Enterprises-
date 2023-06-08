@@ -7,7 +7,7 @@ const session = require('express-session')
 
 // Mongoose
 // mongoose.connect('mongodb://127.0.0.1:27017/test-db', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://anuragdeepaksahu:stock.26@stock.bwxqnl7.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://code:code@stock.bwxqnl7.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 // Schema
 const Schema = mongoose.Schema;
 const mySchema = new Schema({
