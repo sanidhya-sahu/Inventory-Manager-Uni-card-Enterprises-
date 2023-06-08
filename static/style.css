@@ -269,3 +269,18 @@ input[type=number]::-webkit-outer-spin-button {
     left: 34%;
     width: auto;
 }
+td,th,tr{
+    border: 3px solid #0000003d;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+table{
+    border: 3px solid black;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    margin: 5px;
+}
+th{
+    background-color: #0000001a;
+}

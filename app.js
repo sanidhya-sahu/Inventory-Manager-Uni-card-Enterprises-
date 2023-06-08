@@ -4,6 +4,7 @@ const path = require('path')
 const session = require('express-session')
 
 
+
 // Mongoose
 mongoose.connect('mongodb://127.0.0.1:27017/test-db', { useNewUrlParser: true, useUnifiedTopology: true });
 // mongoose.connect('mongodb+srv://aneesahu4:sanidhya.09@cluster0.afmgcmf.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -28,10 +29,15 @@ const stockSchema = new Schema({
     user: String,
     product: String,
     detail: String,
-    quantity: String,
+    quantity: Number,
+});
+const codeSchema = new Schema({
+    Code: String,
+    'Material Description': String
 });
 // Model
 const data = mongoose.model('data', mySchema);
+const code = mongoose.model('code', mySchema);
 const stock = mongoose.model('stock', stockSchema);
 const logtime = mongoose.model('logtime', logSchema);
 // Express
@@ -64,10 +70,10 @@ app.post('/logina', (req, res) => {
         acctype: "admin"
     })
         .then(foundDocument => {
-            console.log('found document is ', foundDocument);
+            // console.log('found document is ', foundDocument);
 
             if (Object.keys(foundDocument).length === 0) {
-                console.log('Wrong Credentials')
+                // window.alert('Wrong Credentials');
                 res.render('admin')
                 req.session.logsuccess = false
             }
@@ -76,6 +82,7 @@ app.post('/logina', (req, res) => {
                     .then(result => {
                         req.session.username = req.body.username;
                         req.session.logsuccess = true
+                        req.session.acctype = 'admin'
                         if (req.session.logsuccess == true) {
                             res.render('adminmain')
                         }
@@ -106,9 +113,9 @@ app.post('/logine', (req, res) => {
         acctype: "employee"
     })
         .then(foundDocument => {
-            console.log('found document is ', foundDocument);
+            // console.log('found document is ', foundDocument);
             if (Object.keys(foundDocument).length === 0) {
-                console.log('Wrong Credentials')
+                // Window.alert('Wrong Credentials');
                 res.render('employee')
                 req.session.logsuccess = false
             }
@@ -117,6 +124,7 @@ app.post('/logine', (req, res) => {
                     .then(result => {
                         req.session.username = req.body.username;
                         req.session.logsuccess = true
+                        req.session.acctype = 'employee'
                         if (req.session.logsuccess == true) {
                             res.render('empmain')
                         }
@@ -135,10 +143,9 @@ app.post('/logine', (req, res) => {
             res.render('employee')
         });
 })
-app.get('/viewstock', (req, res) => {
+app.get('/adminmain', (req, res) => {
     if (req.session.logsuccess == true) {
-        res.render('index')
-        console.log('view')
+        res.render('adminmain')
     }
     else {
         res.render('index')
@@ -168,10 +175,16 @@ app.post('/updatestock', (req, res) => {
 })
 app.post('/savestock', (req, res) => {
     if (req.session.logsuccess == true) {
-        stock.updateOne({ product: String(req.body.prod).replace(/_/g, ' ') }, { detail: req.session.note, user: req.session.username, quantity: req.session.quantity, dateCreated: Date() }, { upsert: true })
+        stock.updateOne({ product: String(req.body.prod).replace(/_/g, ' ') }, { detail: req.session.note, user: req.session.username, dateCreated: Date() }, { upsert: true })
             .then(result => {
-                console.log('Update result:', result);
-                res.render('stockconfirm')
+                stock.updateOne({ product: String(req.body.prod).replace(/_/g, ' ') }, { $inc: { quantity: Number(req.session.quantity) } })
+                    .then(fresult => {
+                        res.render('stockconfirm')
+                    })
+                    .catch(er => {
+                        console.error(er)
+                    })
+                // console.log('Update result:', result);
             })
             .catch(error => {
                 console.error('Error updating document:', error);
@@ -181,16 +194,85 @@ app.post('/savestock', (req, res) => {
         res.render('index')
     }
 })
+app.get('/viewstock', async (req, res) => {
+    if (req.session.logsuccess == true) {
+        code.find({})
+            .then(founddat => {
+                var found = []
+                for (const obj of founddat) {
+                    const found1 = obj['_doc'].Code
+                    const found2 = Object.values(obj['_doc'])[2];
+                    found.push(String(found1) + " " + String(found2))
+                }
+                // console.log(found)
+                res.render('viewstock', { found })
+            })
+            .catch(er => {
+                console.log(er)
+            })
+    }
+    else {
+        res.render('index')
+    }
+})
+app.post('/viewstock', (req, res) => {
+    if (req.session.logsuccess == true) {
+        var query = req.body.datalist
+        // console.log(query)
+        stock.find({ product: query })
+            .then(out => {
+                if (Object.keys(out).length === 0) {
+                    const product = 'No data'
+                    const date = 'No data'
+                    const quantity = 'No data'
+                    const user = 'No data'
+                    const detail = 'No data'
+                    res.render('displaystock', { product, date, quantity, user, detail })
+                }
+                else {
+                    for (const obj of out) {
+                        const product = obj['_doc'].product
+                        const date = obj['_doc'].dateCreated
+                        const quantity = obj['_doc'].quantity
+                        const user = obj['_doc'].user
+                        const detail = obj['_doc'].detail
+                        res.render('displaystock', { product, date, quantity, user, detail })
+                    }
+                }
+            })
+            .catch(erur => {
+                console.error(erur)
+            })
+        // res.render('updatestock')
+    }
+    else {
+        console.log(req.session.logsuccess)
+        res.render('index')
+    }
+});
 app.post('/confirmredirectupdate', (req, res) => {
     if (req.session.logsuccess == true) {
         res.render('updatestock')
     }
     else {
-        res.render('index')
+        // console.log(req.session.logsuccess)
+        if (req.session.acctype == 'admin') {
+            res.render('adminmain')
+        }
+        else {
+            res.render('empmain')
+        }
     }
 });
+
 app.post('/confirmredirecthome', (req, res) => {
-    res.render('index')
+    // console.log(req.session.username)
+    if (req.session.acctype == 'admin') {
+        res.render('adminmain')
+    }
+    else {
+        res.render('empmain')
+    }
 });
 // Redirect route
 app.get('/redirect', (req, res) => {
