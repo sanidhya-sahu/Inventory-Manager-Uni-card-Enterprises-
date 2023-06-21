@@ -37,7 +37,7 @@ const codeSchema = new Schema({
 });
 // Model
 const data = mongoose.model('data', mySchema);
-const code = mongoose.model('code', mySchema);
+const code = mongoose.model('code', codeSchema);
 const stock = mongoose.model('stock', stockSchema);
 const logtime = mongoose.model('logtime', logSchema);
 // Express
