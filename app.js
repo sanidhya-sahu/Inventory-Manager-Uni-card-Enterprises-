@@ -177,7 +177,7 @@ app.post('/updatestock', (req, res) => {
 })
 app.post('/savestock', (req, res) => {
     if (req.session.logsuccess == true) {
-        stock.updateOne({ product: String(req.body.prod).replace(/_/g, ' ') }, { detail: req.session.note, user: req.session.username, dateCreated: Date() }, { upsert: true })
+        stock.updateOne({ product: String(req.body.prod).replace(/_/g, ' ').trim() }, { detail: req.session.note, user: req.session.username, dateCreated: Date() }, { upsert: true })
             .then(result => {
                 stock.updateOne({ product: String(req.body.prod).replace(/_/g, ' ') }, { $inc: { quantity: Number(req.session.quantity) } })
                     .then(fresult => {
