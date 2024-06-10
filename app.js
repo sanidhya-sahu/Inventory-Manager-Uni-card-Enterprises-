@@ -206,7 +206,7 @@ app.get('/viewstock', async (req, res) => {
                     const found2 = Object.values(obj['_doc'])[2];
                     found.push(String(found1) + " " + String(found2))
                 }
-                // console.log(found)
+                console.log(found)
                 res.render('viewstock', { found })
             })
             .catch(er => {
